@@ -1,0 +1,9 @@
+.copy {
+	font-size: 20px;
+	line-height: (30/20);
+	font-family: $fontFamily;
+
+	&:not(:last-child) {
+		margin-bottom: 50px;
+	}
+}

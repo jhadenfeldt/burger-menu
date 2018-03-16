@@ -1,0 +1,8 @@
+#main {
+	margin-top: $headerSize;
+	padding: 50px;
+}
+
+body.prevent-scroll {
+	overflow: hidden;
+}

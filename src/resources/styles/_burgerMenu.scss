@@ -1,0 +1,246 @@
+.burger-menu {
+	$iconXPadding: 15px;
+	$iconYPadding: 15px;
+	$listElementHeight: 60px;
+	$iconLineWidth: 4px;
+	$listLinkColor: black;
+	$listPadding: 60px;
+	$listFontSize: 28px;
+
+	* {
+		box-sizing: border-box;
+		&:before, &:after {
+			box-sizing: inherit;
+		}
+	}
+
+	&,
+	&__content {
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		width: 100%;
+	}
+
+	&__content {
+		background: lime;
+		transform: translateX(-100vw);
+		padding-top: $headerSize;
+		box-sizing: border-box;
+		overflow: hidden;
+
+		&--transitioning {
+			transition: transform 0.2s ease-in-out;
+			height: 100vh;
+		}
+
+
+		& > li {
+
+			a {
+				position: relative;
+				display: inline-block;
+				text-decoration: none;
+				color: $listLinkColor;
+				font-size: $listFontSize;
+				line-height: ($listElementHeight/$listFontSize);
+				font-family: $fontFamily;
+			}
+
+			// Overwrite font-awesome styling
+			.fa-li {
+				top: 0;
+			}
+		}
+
+	}
+
+	&--visible {
+		.burger-menu {
+			height: 100vh;
+
+			&__content {
+				height: 100vh;
+				transform: translateX(0);
+			}
+
+			&__button {
+				.burger-menu__burgerIcon {
+					background: rgba(black, 0);
+					&:before {
+						transform: translate3d(0, #{$headerSize / 6}, 0) rotate(-135deg);
+					}
+					&:after {
+						transform: translate3d(0, -#{$headerSize / 6}, 0) rotate(135deg);
+					}
+				}
+			}
+		}
+	}
+
+	&__button {
+		display: block;
+		width: $headerSize;
+		height: $headerSize;
+		position: absolute;
+		right: 0;
+		padding: $iconYPadding $iconXPadding;
+
+		background: red;
+		cursor: pointer;
+
+		// hide content
+		text-indent: -100%;
+		overflow: hidden;
+		z-index: 1;
+	}
+
+	&__burgerIcon {
+		top: 50%;
+		left: $iconXPadding;
+		width: calc(100% - #{$iconXPadding * 2});
+		margin-top: -#{$iconLineWidth - $iconLineWidth / 2};
+		transition: background-color 0.05s linear;
+
+		&,
+		&:before,
+		&:after {
+			display: block;
+			height: $iconLineWidth;
+			position: absolute;
+			background: rgba(black, 1);
+			border-radius: $iconLineWidth;
+		}
+
+		&:before {
+			content: '';
+			width: 100%;
+			top: -#{$headerSize / 6};
+			transition: transform 0.2s ease-in-out;
+		}
+
+		&:after {
+			content: '';
+			width: 100%;
+			top: #{$headerSize / 6};
+			transition: transform 0.2s ease-in-out;
+		}
+
+		&--close {
+			pointer-events: none;
+			background: rgba(black, 0);
+			&:before {
+				transform: translate3d(0, #{$headerSize / 6}, 0) rotate(-135deg);
+			}
+			&:after {
+				transform: translate3d(0, -#{$headerSize / 6}, 0) rotate(135deg);
+			}
+		}
+	}
+
+	&__listItem {
+		padding-left: $listPadding;
+		border-top: 1px solid blue;
+		width: 100%;
+		height: auto;
+
+		background: rgba(white, 0);
+		transition: background-color .3s linear;
+
+		&--active {
+			background: rgba(white, 1);
+
+			.burger-menu__submenu {
+				left: $listPadding;
+			}
+		}
+
+		&:last-child {
+			border-bottom: 1px solid blue;
+		}
+
+		&--dropdown-visible {
+			.burger-menu__dropdownTrigger {
+				i {
+					transform: rotate(180deg);
+				}
+			}
+		}
+	}
+
+	&__submenuTrigger {
+		position: absolute;
+		right: 0;
+		width: $listElementHeight;
+		height: $listElementHeight;
+		background: purple;
+		display: block;
+		cursor: pointer;
+
+		& + a {
+			width: calc(100% - #{$listElementHeight});
+		}
+
+		i {
+			pointer-events: none;
+			font-size: 20px;
+			width: $listElementHeight;
+			text-align: center;
+			line-height: #{$listElementHeight/20px};
+			margin-left: 2px;
+		}
+	}
+
+	&__submenu {
+		background: green;
+		position: absolute;
+		top: $headerSize;
+		left: 100%;
+		height: 100%;
+		width: calc(100% - #{$listPadding});
+		z-index: 1;
+		transition: left 0.2s ease-in-out;
+
+		.burger-menu__listItem {
+			padding-left: 15px;
+			position: relative;
+		}
+	}
+
+	&__submenuTitle {
+		text-transform: uppercase;
+	}
+
+	&__submenuClose {
+		cursor: pointer;
+		display: block;
+		height: 50px;
+		width: 50px;
+		position: absolute;
+		top: 5px;
+		left: calc(100% - 55px);
+	}
+
+	&__dropdownTrigger {
+		position: absolute;
+		right: 10px;
+		top: 10px;
+		padding: 10px;
+		cursor: pointer;
+
+		i {
+			pointer-events: none;
+		}
+	}
+
+	&__dropdown {
+		position: relative;
+		top: 0;
+		height: 0;
+		overflow: hidden;
+		transition: height 0.2s ease-in-out;
+		padding-left: 25px;
+	}
+
+}
