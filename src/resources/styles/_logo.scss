@@ -1,0 +1,11 @@
+.logo {
+	$logoFontSize: 24px;
+
+	text-transform: uppercase;
+	color: $logoColor;
+	box-shadow: $headerBoxShadow;
+	font-size: $logoFontSize;
+	font-family: $fontFamily;
+	line-height: ($headerSize / $logoFontSize);
+	padding: 0 10px 0 60px;
+}

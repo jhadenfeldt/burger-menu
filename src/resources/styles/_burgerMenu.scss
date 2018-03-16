@@ -6,6 +6,7 @@
 	$listLinkColor: black;
 	$listPadding: 60px;
 	$listFontSize: 28px;
+	$easeInOutBack: cubic-bezier(.68, -.55, .265, 1.55);
 
 	* {
 		box-sizing: border-box;
@@ -24,25 +25,22 @@
 	}
 
 	&__content {
-		background: lime;
+		background: $menuBackgroundColor;
 		transform: translateX(-100vw);
-		padding-top: $headerSize;
+		margin-top: $headerSize;
 		box-sizing: border-box;
 		overflow: hidden;
 
 		&--transitioning {
-			transition: transform 0.2s ease-in-out;
+			transition: transform .2s ease-in-out;
 			height: 100vh;
 		}
 
-
-		& > li {
-
+		& > .burger-menu__listItem {
 			a {
 				position: relative;
 				display: inline-block;
 				text-decoration: none;
-				color: $listLinkColor;
 				font-size: $listFontSize;
 				line-height: ($listElementHeight/$listFontSize);
 				font-family: $fontFamily;
@@ -87,7 +85,7 @@
 		right: 0;
 		padding: $iconYPadding $iconXPadding;
 
-		background: red;
+		background: $burgerBackgroundColor;
 		cursor: pointer;
 
 		// hide content
@@ -101,7 +99,7 @@
 		left: $iconXPadding;
 		width: calc(100% - #{$iconXPadding * 2});
 		margin-top: -#{$iconLineWidth - $iconLineWidth / 2};
-		transition: background-color 0.05s linear;
+		transition: background-color .15s linear;
 
 		&,
 		&:before,
@@ -109,7 +107,7 @@
 			display: block;
 			height: $iconLineWidth;
 			position: absolute;
-			background: rgba(black, 1);
+			background: rgba($burgerColor, 1);
 			border-radius: $iconLineWidth;
 		}
 
@@ -117,19 +115,19 @@
 			content: '';
 			width: 100%;
 			top: -#{$headerSize / 6};
-			transition: transform 0.2s ease-in-out;
+			transition: transform .4s $easeInOutBack;
 		}
 
 		&:after {
 			content: '';
 			width: 100%;
 			top: #{$headerSize / 6};
-			transition: transform 0.2s ease-in-out;
+			transition: transform .4s $easeInOutBack;
 		}
 
 		&--close {
 			pointer-events: none;
-			background: rgba(black, 0);
+			background: rgba($burgerColor, 0);
 			&:before {
 				transform: translate3d(0, #{$headerSize / 6}, 0) rotate(-135deg);
 			}
@@ -141,23 +139,50 @@
 
 	&__listItem {
 		padding-left: $listPadding;
-		border-top: 1px solid blue;
+		border-top: 1px solid $menuListItemBorder;
 		width: 100%;
 		height: auto;
 
-		background: rgba(white, 0);
-		transition: background-color .3s linear;
+		background: rgba($menuListItemBackground, 0);
+		transition: background-color .3s linear, color .3s linear;
+
+		a {
+			color: $menuListItemColor;
+
+			&:after {
+				content: '';
+				display: block;
+				width: 100%;
+				height: 2px;
+				background: rgba($menuListItemColor, .2);
+				position: absolute;
+				top: #{$listElementHeight - 15px};
+				opacity: 0;
+				transform: translate3d(0, -10px, 0);
+				transition: transform .1s linear, opacity .1s linear;
+			}
+			&:hover {
+				&:after {
+					opacity: 1;
+					transform: translate3d(0, 0, 0);
+				}
+			}
+		}
 
 		&--active {
-			background: rgba(white, 1);
+			background: rgba($menuListItemBackground, 1);
 
 			.burger-menu__submenu {
 				left: $listPadding;
 			}
+
+			& > a {
+				color: $menuListItemColorActive;
+			}
 		}
 
 		&:last-child {
-			border-bottom: 1px solid blue;
+			border-bottom: 1px solid $menuListItemBorder;
 		}
 
 		&--dropdown-visible {
@@ -174,13 +199,10 @@
 		right: 0;
 		width: $listElementHeight;
 		height: $listElementHeight;
-		background: purple;
+		background: $submenuTriggerBackground;
+		color: $menuListItemColor;
 		display: block;
 		cursor: pointer;
-
-		& + a {
-			width: calc(100% - #{$listElementHeight});
-		}
 
 		i {
 			pointer-events: none;
@@ -190,26 +212,33 @@
 			line-height: #{$listElementHeight/20px};
 			margin-left: 2px;
 		}
+
+		&:hover {
+			i {
+				animation: .7s infinite alternate bounce;
+			}
+		}
 	}
 
 	&__submenu {
-		background: green;
+		background: $submenuBackground;
 		position: absolute;
-		top: $headerSize;
+		top: 0;
 		left: 100%;
 		height: 100%;
 		width: calc(100% - #{$listPadding});
 		z-index: 1;
-		transition: left 0.2s ease-in-out;
+		transition: left .2s ease-in-out;
 
 		.burger-menu__listItem {
-			padding-left: 15px;
+			padding-left: 25px;
 			position: relative;
 		}
 	}
 
 	&__submenuTitle {
 		text-transform: uppercase;
+		font-weight: bold;
 	}
 
 	&__submenuClose {
@@ -220,6 +249,13 @@
 		position: absolute;
 		top: 5px;
 		left: calc(100% - 55px);
+
+		span {
+			&:before,
+			&:after {
+				background: $menuListItemColor;
+			}
+		}
 	}
 
 	&__dropdownTrigger {
@@ -239,7 +275,7 @@
 		top: 0;
 		height: 0;
 		overflow: hidden;
-		transition: height 0.2s ease-in-out;
+		transition: height .2s ease-in-out;
 		padding-left: 25px;
 	}
 

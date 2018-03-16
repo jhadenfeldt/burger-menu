@@ -1,12 +1,31 @@
 // Helpers
 @import 'reset';
+@import 'animations';
 
 // Global Variables
 $fontFamily: Calibri, Helvetica, sans-serif;
 $headerSize: 60px;
-$fa-font-path:   "../../../node_modules/font-awesome/fonts";
+$fa-font-path: "../../../node_modules/font-awesome/fonts";
 
-// Global Styles
+// Color theme
+$headerBackgroundColor: #fff;
+$headerBoxShadow: 0 10px 10px rgba(#fff, 1);
+
+$logoColor: #e62739;
+
+$burgerColor: #edf7f9;
+$burgerBackgroundColor: #e62739;
+$menuBackgroundColor: #fff;
+
+$menuListItemBorder: #ddd;
+$menuListItemBackground: #e62739;
+$menuListItemColor: #444;
+$menuListItemColorActive: #fff;
+
+$submenuBackground: #eee;
+$submenuTriggerBackground: #eee;
+
+// Global Stylesr
 @import "../../../node_modules/font-awesome/scss/font-awesome";
 @import "layout";
 
@@ -15,3 +34,4 @@ $fa-font-path:   "../../../node_modules/font-awesome/fonts";
 @import 'pageHeader';
 @import "headline";
 @import "copy";
+@import "logo";
